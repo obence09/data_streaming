@@ -12,12 +12,10 @@ sql = "INSERT INTO transactions (txid, uid, amount) VALUES (%s, %s, %s)"
 
 #streaming 10 rows of data from API to postgresql database
 with requests.get("http://127.0.0.1:5000/very_large_request/10", stream=True) as request:
-    print(request.text)
     buffer = ""
     for chunk in request.iter_content(chunk_size=1):
         if chunk.endswith(b'\n'):
             t = eval(buffer)
-            print(t)
             cur.execute(sql, (t[0], t[1],t[2]))
             conn.commit( )
             buffer=""
