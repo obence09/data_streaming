@@ -17,8 +17,8 @@ def get_large_request(rowcount):
         for i in range(rowcount):
             time.sleep(.1)
             txid = uuid.uuid4()
-            print(txid)
             uid = uuid.uuid4()
+            #creat random data
             amount = round(random.uniform(-10000,10000),2)
             yield f"('{txid}', '{uid}', {amount})\n"
     return Response(stream_with_context(data_generator()))
